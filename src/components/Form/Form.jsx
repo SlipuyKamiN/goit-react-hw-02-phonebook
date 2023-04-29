@@ -17,7 +17,7 @@ export const AppForm = ({
         value={numberValue}
         handleInputChange={handleInputChange}
       ></NumberInput>
-      <SubmitButton type="submit">Add contact</SubmitButton>
+      <SubmitButton type="submit">Add contact!</SubmitButton>
     </Form>
   );
 };
