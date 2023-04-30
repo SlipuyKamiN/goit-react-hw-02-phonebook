@@ -7,7 +7,7 @@ import {
 } from './App.styled';
 import { ContactForm } from 'components/Form/Form';
 import { ContactList } from 'components/ContactList/ContactList';
-import { Filter } from 'components/Inputs';
+import { Filter } from 'components/Filter/Filter';
 
 export class App extends Component {
   state = {

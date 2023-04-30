@@ -1,50 +1,66 @@
 import PropTypes from 'prop-types';
-import { NameInput, NumberInput } from 'components/Inputs/index';
-import { Form, SubmitButton } from './Form.styled';
-import { Component } from 'react';
+import {
+  AppForm,
+  FormInput,
+  FormInputLabel,
+  SubmitButton,
+  ErrMessage,
+} from './Form.styled';
+import { nanoid } from 'nanoid';
+import { Formik } from 'formik';
+import * as yup from 'yup';
 
-export class ContactForm extends Component {
-  state = {
+export const ContactForm = ({ onSubmit }) => {
+  const nameID = nanoid();
+  const numberID = nanoid();
+
+  const initialValues = {
     name: '',
     number: '',
   };
 
-  handleInputChange = event => {
-    const { name, value } = event.currentTarget;
+  const validationSchema = yup.object().shape({
+    name: yup
+      .string()
+      .matches(
+        "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$",
+        "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+      )
+      .required(),
+    number: yup
+      .string()
+      .matches(
+        '^[+]?[(]?[0-9]{1,4}[)]?[-s.]?[0-9]{1,4}[-s.]?[0-9]{1,6}$',
+        'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
+      )
+      .required(),
+  });
 
-    this.setState({ [name]: value });
+  const handleSubmit = (values, actions) => {
+    onSubmit(values);
+    actions.resetForm();
   };
 
-  handleFormSubmit = event => {
-    event.preventDefault();
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      <AppForm autoComplete="off">
+        <FormInputLabel htmlFor={nameID}>Name</FormInputLabel>
+        <FormInput type="text" name="name" id={nameID} />
+        <ErrMessage name="name" component="div" />
 
-    this.props.onSubmit(this.state);
+        <FormInputLabel htmlFor={numberID}>Number</FormInputLabel>
+        <FormInput type="text" name="number" id={numberID} />
+        <ErrMessage name="number" component="div" />
 
-    this.resetState();
-  };
-
-  resetState() {
-    this.setState({
-      name: '',
-      number: '',
-    });
-  }
-
-  render() {
-    const { name, number } = this.state;
-
-    return (
-      <Form onSubmit={this.handleFormSubmit} autoComplete="off">
-        <NameInput value={name} handleInputChange={this.handleInputChange} />
-        <NumberInput
-          value={number}
-          handleInputChange={this.handleInputChange}
-        />
-        <SubmitButton type="submit">Add contact</SubmitButton>
-      </Form>
-    );
-  }
-}
+        <SubmitButton type="submit">Submit</SubmitButton>
+      </AppForm>
+    </Formik>
+  );
+};
 
 ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,

@@ -5,12 +5,12 @@ export const FilterWrapper = styled.div`
   margin-bottom: 25px;
 `;
 
-export const FormInput = styled.input`
+export const FilterInput = styled.input`
   width: 250px;
   font-size: 24px;
 `;
 
-export const FormInputLabel = styled.label`
+export const FilterLabel = styled.label`
   text-transform: capitalize;
   width: 250px;
   font-size: 24px;
