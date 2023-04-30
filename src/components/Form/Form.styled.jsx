@@ -31,22 +31,8 @@ export const FormInputLabel = styled.label`
 
 export const ErrMessage = styled(ErrorMessage)`
   max-width: 250px;
-  margin-top: 10px;
   color: red;
 `;
-
-// export const AppForm = styled.form`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   gap: 10px;
-
-//   width: 300px;
-//   border: 1px solid black;
-//   border-radius: 15px;
-//   padding: 15px;
-// `;
 
 export const SubmitButton = styled.button`
   background-color: transparent;
