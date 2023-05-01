@@ -21,8 +21,10 @@ export class App extends Component {
   };
 
   handleFormSubmit = ({ name, number }) => {
+    const normalizedName = name.toLowerCase();
+
     const isNameAlreadyInContacts = this.state.contacts.find(
-      contact => contact.name === name
+      contact => contact.name.toLowerCase() === normalizedName
     );
 
     if (isNameAlreadyInContacts) {
